@@ -2,9 +2,66 @@ import { Link } from "react-router-dom";
 import { ProjectData } from "../../data/ProjectData";
 import engineImg from "../../assets/train engine.jpg";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+
+// Import train sound files
+import trainWhistle from "../../assets/sounds/train-whistle.mp3";
+import trainChugging from "../../assets/sounds/train-chugging.mp3";
+import trainBrakes from "../../assets/sounds/train-brakes.mp3";
 
 const Projects = () => {
+  const [isHovering, setIsHovering] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const whistleSound = useRef(null);
+  const chuggingSound = useRef(null);
+  const brakesSound = useRef(null);
+
+  // 🚂 Initialize audio elements
+  useEffect(() => {
+    whistleSound.current = new Audio(trainWhistle);
+    chuggingSound.current = new Audio(trainChugging);
+    brakesSound.current = new Audio(trainBrakes);
+    
+    // Set loop for chugging sound
+    chuggingSound.current.loop = true;
+    
+    // Play initial whistle when component mounts
+    const playInitialWhistle = setTimeout(() => {
+      if (whistleSound.current && !isMuted) {
+        whistleSound.current.volume = 0.7;
+        whistleSound.current.play().catch(e => console.log("Audio play failed:", e));
+      }
+    }, 1000);
+    
+    // Start chugging sound after whistle
+    const startChugging = setTimeout(() => {
+      if (chuggingSound.current && !isMuted) {
+        chuggingSound.current.volume = 0.5;
+        chuggingSound.current.play().catch(e => console.log("Audio play failed:", e));
+      }
+    }, 3000);
+    
+    // Clean up function to stop all sounds when component unmounts
+    return () => {
+      clearTimeout(playInitialWhistle);
+      clearTimeout(startChugging);
+      
+      // Stop all sounds
+      if (whistleSound.current) {
+        whistleSound.current.pause();
+        whistleSound.current.currentTime = 0;
+      }
+      if (chuggingSound.current) {
+        chuggingSound.current.pause();
+        chuggingSound.current.currentTime = 0;
+      }
+      if (brakesSound.current) {
+        brakesSound.current.pause();
+        brakesSound.current.currentTime = 0;
+      }
+    };
+  }, [isMuted]);
+
   // 🌀 Smoke follows mouse movement
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -15,6 +72,69 @@ const Projects = () => {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  // Handle train container hover (play/pause sounds)
+  const handleTrainHover = (isHovering) => {
+    setIsHovering(isHovering);
+    
+    if (isHovering) {
+      // Play brakes sound when hovering (train stopping)
+      if (brakesSound.current && !isMuted) {
+        brakesSound.current.volume = 0.6;
+        brakesSound.current.play().catch(e => console.log("Audio play failed:", e));
+      }
+      
+      // Pause chugging sound
+      if (chuggingSound.current) {
+        chuggingSound.current.pause();
+      }
+    } else {
+      // Play whistle and resume chugging when mouse leaves
+      if (whistleSound.current && !isMuted) {
+        whistleSound.current.volume = 0.7;
+        whistleSound.current.play().catch(e => console.log("Audio play failed:", e));
+      }
+      
+      // Resume chugging after a short delay
+      setTimeout(() => {
+        if (chuggingSound.current && !isMuted) {
+          chuggingSound.current.play().catch(e => console.log("Audio play failed:", e));
+        }
+      }, 1500);
+    }
+  };
+
+  // Play click sound when a project is selected
+  const handleProjectClick = () => {
+    if (whistleSound.current && !isMuted) {
+      whistleSound.current.volume = 0.5;
+      whistleSound.current.play().catch(e => console.log("Audio play failed:", e));
+    }
+  };
+
+  // Toggle mute/unmute
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    
+    if (isMuted) {
+      // Unmute - restart sounds
+      if (chuggingSound.current) {
+        chuggingSound.current.volume = 0.5;
+        chuggingSound.current.play().catch(e => console.log("Audio play failed:", e));
+      }
+    } else {
+      // Mute - pause all sounds
+      if (whistleSound.current) {
+        whistleSound.current.pause();
+      }
+      if (chuggingSound.current) {
+        chuggingSound.current.pause();
+      }
+      if (brakesSound.current) {
+        brakesSound.current.pause();
+      }
+    }
+  };
 
   return (
     <motion.section
@@ -65,6 +185,12 @@ const Projects = () => {
             50% { transform: translateY(-4px); }
           }
 
+          /* Train movement animation */
+          @keyframes trainMove {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+          }
+          
           /* ✨ Sparks with glow */
           .wheel::after {
             content: '';
@@ -84,7 +210,8 @@ const Projects = () => {
           /* ⛔ Pause on hover */
           .train-container:hover .wheel,
           .train-container:hover .wheel::after,
-          .train-container:hover .smoke-puff {
+          .train-container:hover .smoke-puff,
+          .train-container:hover .animate-train {
             animation-play-state: paused;
           }
 
@@ -108,9 +235,13 @@ const Projects = () => {
 
       <h2 className="text-3xl font-bold text-center mb-10 text-white relative z-10">🚂 My Projects</h2>
 
-      <div className="relative w-full overflow-hidden train-container z-10">
+      <div 
+        className="relative w-full overflow-hidden train-container z-10"
+        onMouseEnter={() => handleTrainHover(true)}
+        onMouseLeave={() => handleTrainHover(false)}
+      >
         <motion.div
-          className="flex items-start"
+          className="flex items-start animate-train"
           initial={{ x: "100%" }}
           animate={{ x: "-100%" }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -148,6 +279,7 @@ const Projects = () => {
               <Link
                 to={`/projects/${p.id}`}
                 className="flex flex-col items-center hover:scale-105 transition-transform duration-300"
+                onClick={handleProjectClick}
               >
                 <div className="min-w-[180px] sm:min-w-[250px] bg-gray-800 text-white rounded-xl shadow-lg p-4 sm:p-6 text-center cursor-pointer filter drop-shadow-lg">
                   <h3 className="text-lg sm:text-xl font-semibold">{p.name}</h3>
@@ -166,6 +298,31 @@ const Projects = () => {
       </div>
 
       <div className="h-1 sm:h-2 bg-gray-700 mt-6 rounded-full mx-4 sm:mx-6 z-10 relative"></div>
+      
+      {/* Sound controls UI */}
+      <div className="absolute bottom-4 right-4 z-20">
+        <button 
+          className="bg-gray-800 text-white px-3 py-1 rounded-lg text-sm opacity-70 hover:opacity-100 transition-opacity flex items-center"
+          onClick={toggleMute}
+        >
+          {isMuted ? (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clipRule="evenodd" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+              </svg>
+              Unmute
+            </>
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M12 6a9 9 0 010 12m-4.5-9.5L12 3v18l-4.5-4.5H4a1 1 0 01-1-1v-7a1 1 0 011-1h3.5z" />
+              </svg>
+              Mute
+            </>
+          )}
+        </button>
+      </div>
     </motion.section>
   );
 };
