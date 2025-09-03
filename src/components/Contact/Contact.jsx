@@ -3,19 +3,19 @@ import { motion } from "framer-motion";
 const Contact = () => {
   return (
     <motion.section
-      className="px-8 py-16 text-center bg-white shadow-inner"
+      className="min-h-screen px-8 py-16 text-center bg-gray-900 shadow-inner"
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8 }}
     >
-      <h2 className="text-3xl font-bold mb-6">Contact Me</h2>
+      <h2 className="text-3xl text-amber-50 font-bold mb-6">Contact Me</h2>
       <motion.p 
         className="text-lg mb-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        📧 Email:{" "}
+        📧 Email:{"taslima2092965@gmail.com "}
         <a
           href="mailto:your.email@example.com"
           className="text-blue-600 hover:underline"

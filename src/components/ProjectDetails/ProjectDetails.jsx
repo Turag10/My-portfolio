@@ -14,7 +14,7 @@ const ProjectDetails = () => {
 
   return (
     <motion.div
-      className="p-10 max-w-3xl mx-auto bg-white rounded-xl shadow-lg mt-10"
+      className="p-10 max-w-3xl mx-auto bg-black rounded-xl shadow-lg mt-10"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}
@@ -36,6 +36,7 @@ const ProjectDetails = () => {
         <Link to="/projects" className="text-blue-600 hover:underline">
           ← Back to Projects
         </Link>
+        
       </div>
     </motion.div>
   );

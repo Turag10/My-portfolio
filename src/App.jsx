@@ -11,41 +11,71 @@ import { useState, useEffect } from "react";
 import LineLoader from "./components/LineLoader/LineLoader";
 import PageTransition from "./components/PageTransition/PageTransition";
 
+// Simple wrapper so page background stays consistent
 function PageWrapper({ children }) {
+  return <motion.div className="min-h-screen bg-gray-700">{children}</motion.div>;
+}
+
+// Small opacity overlay for route change cinematic effect
+function OpacityCover() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -40 }}
-      transition={{ duration: 0.6 }}
-      className="min-h-screen"
-    >
-      {children}
-    </motion.div>
+      className="fixed top-0 left-0 w-full h-full bg-black z-[9998]"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1.2, ease: "easeInOut" }}
+    />
   );
 }
 
-function AnimatedRoutes() {
+function AnimatedRoutes({ firstLoad, setFirstLoad }) {
   const location = useLocation();
-  const [loadingStage, setLoadingStage] = useState("line"); 
-  // "line" → LineLoader → "transition" → PageTransition → "done" → show content
+  const [stage, setStage] = useState(firstLoad ? "first-line" : "done");
 
+  // ✅ First load → LineLoader → PageTransition (cover+reveal) → Done
   useEffect(() => {
-    setLoadingStage("line");
+    if (firstLoad) {
+      setStage("first-line");
+      const timers = [
+        setTimeout(() => setStage("first-slices"), 2500), // PageTransition
+        setTimeout(() => {
+          setStage("done");
+          setFirstLoad(false);
+        }, 8000), // after reveal ends
+      ];
+      return () => timers.forEach(clearTimeout);
+    }
+  }, [firstLoad, setFirstLoad]);
 
-    const timers = [
-      setTimeout(() => setLoadingStage("transition"), 1000),  // LineLoader 1s
-      setTimeout(() => setLoadingStage("done"), 2200),        // PageTransition another 1.2s
-    ];
-
-    return () => timers.forEach(clearTimeout);
+  // ✅ Route change → LineLoader → OpacityCover → LineLoader → PageTransition (reveal) → Done
+  useEffect(() => {
+    if (!firstLoad) {
+      setStage("line");
+      const timers = [
+        setTimeout(() => setStage("cover"), 2500),    // OpacityCover
+        setTimeout(() => setStage("line-2"), 4000),   // LineLoader again
+        setTimeout(() => setStage("reveal"), 6500),   // PageTransition reveal
+        setTimeout(() => setStage("done"), 10500),    // show page
+      ];
+      return () => timers.forEach(clearTimeout);
+    }
   }, [location.pathname]);
 
   return (
     <AnimatePresence mode="wait">
-      {loadingStage === "line" && <LineLoader key="line-loader" />}
-      {loadingStage === "transition" && <PageTransition key="page-transition" />}
-      {loadingStage === "done" && (
+      {/* 🔥 First load */}
+      {stage === "first-line" && <LineLoader key="line-loader-first" />}
+      {stage === "first-slices" && <PageTransition key="slices-first" mode="full" />}
+
+      {/* 🔥 Route change cinematic */}
+      {stage === "line" && <LineLoader key="line-loader" />}
+      {stage === "cover" && <OpacityCover key="opacity-cover" />}
+      {stage === "line-2" && <LineLoader key="line-loader-2" />}
+      {stage === "reveal" && <PageTransition key="slices-reveal" mode="reveal" />}
+
+      {/* 🔥 Done → Render actual page */}
+      {stage === "done" && (
         <Routes location={location} key={location.pathname}>
           <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
           <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
@@ -58,11 +88,13 @@ function AnimatedRoutes() {
 }
 
 export default function App() {
+  const [firstLoad, setFirstLoad] = useState(true);
+
   return (
     <Router>
       <Navbar />
       <AnimatedBackground />
-      <AnimatedRoutes />
+      <AnimatedRoutes firstLoad={firstLoad} setFirstLoad={setFirstLoad} />
     </Router>
   );
 }
