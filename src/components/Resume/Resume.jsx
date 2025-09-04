@@ -168,7 +168,7 @@ const Resume = () => {
       <section
         className="relative min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center"
         style={{
-          backgroundImage: "url('/src/assets/resume-bg.jpg')",
+          backgroundImage: "url('/src/assets/resume-bg.jpeg')",
         }}
       >
         {/* Overlay */}
@@ -246,7 +246,7 @@ const Resume = () => {
             {/* Profile Image */}
             <div className="flex justify-center">
               <img
-                src="/src/assets/profile.jpg" // replace with your profile image
+                src="/src/assets/cv pic.png" // replace with your profile image
                 alt="Profile"
                 className="w-48 h-48 object-cover rounded-md"
               />
@@ -286,7 +286,7 @@ const Resume = () => {
               {/* Download CV Button */}
               <div className="mt-6">
                 <a
-                  href="/resume.pdf" // replace with your CV link
+                  href="/Abdullah-AL-Fahad CV - Google Docs.pdf" // replace with your CV link
                   download
                   className="px-6 py-3 border-2 border-green-400 text-green-400 font-bold rounded hover:bg-green-400 hover:text-gray-900 transition"
                 >
