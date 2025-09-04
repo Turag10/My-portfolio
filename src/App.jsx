@@ -10,6 +10,8 @@ import AnimatedBackground from "./components/AnimatedBackground/AnimatedBackgrou
 import { useState, useEffect } from "react";
 import LineLoader from "./components/LineLoader/LineLoader";
 import PageTransition from "./components/PageTransition/PageTransition";
+import Resume from "./components/Resume/Resume";
+
 
 // Simple wrapper so page background stays consistent
 function PageWrapper({ children }) {
@@ -71,17 +73,21 @@ function AnimatedRoutes({ firstLoad, setFirstLoad }) {
       {/* 🔥 Route change cinematic */}
       {stage === "line" && <LineLoader key="line-loader" />}
       {stage === "cover" && <OpacityCover key="opacity-cover" />}
-      {stage === "line-2" && <LineLoader key="line-loader-2" />}
+    
       {stage === "reveal" && <PageTransition key="slices-reveal" mode="reveal" />}
 
       {/* 🔥 Done → Render actual page */}
       {stage === "done" && (
         <Routes location={location} key={location.pathname}>
-          <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
-          <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
-          <Route path="/projects/:id" element={<PageWrapper><ProjectDetails /></PageWrapper>} />
-          <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
-        </Routes>
+  <Route path="/" element={<PageWrapper><Hero /></PageWrapper>} />
+  <Route path="/projects" element={<PageWrapper><Projects /></PageWrapper>} />
+  <Route path="/projects/:id" element={<PageWrapper><ProjectDetails /></PageWrapper>} />
+  <Route path="/contact" element={<PageWrapper><Contact /></PageWrapper>} />
+  <Route path="/resume" element={<PageWrapper><Resume /></PageWrapper>} />
+
+  
+</Routes>
+
       )}
     </AnimatePresence>
   );
