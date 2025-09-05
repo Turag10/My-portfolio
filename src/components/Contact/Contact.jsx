@@ -18,7 +18,7 @@ const Contact = () => {
         className="relative min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center"
         style={{
           backgroundImage:
-            "url('/src/assets/contact-bg.jpeg')", // <-- replace with your asset
+            "url('/src/assets/contacts.jpeg')", // <-- replace with your asset
         }}
       >
         {/* Overlay */}
