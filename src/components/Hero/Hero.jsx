@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaGithub } from "react-icons/fa";
-import profilePic from "../../assets/my-pic.jpg"; // replace with your photo
+import profilePic from "../../assets/my-pict.png"; // replace with your photo
 
 const sentences = [
   "I code cool websites",

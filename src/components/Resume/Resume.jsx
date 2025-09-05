@@ -56,25 +56,25 @@ const Resume = () => {
 
   // Design skills data with percentages
   const designSkills = [
-    { name: "Web Design", percentage: 70 },
-    { name: "Illustrations", percentage: 90 },
+    { name: "Web Design", percentage: 80 },
+    { name: "Web Hosting", percentage: 60 },
     { name: "Photoshop", percentage: 75 },
-    { name: "Graphic Design", percentage: 80 }
+    { name: "Graphic Design", percentage: 40 }
   ];
 
-  // Language skills data with percentages (dots)
+  
   const languageSkills = [
-    { name: "English", level: 9 },
-    { name: "German", level: 7 },
-    { name: "Italian", level: 8 },
-    { name: "French", level: 7 }
+    { name: "English", level: 8 },
+    { name: "Hindi", level: 7 },
+    { name: "Urdu", level: 5 },
+    { name: "Bangla", level: 9 }
   ];
 
   // Coding skills data with percentages
   const codingSkills = [
-    { name: "WordPress", percentage: 95 },
-    { name: "PHP / MYSQL", percentage: 75 },
-    { name: "Angular / JavaScript", percentage: 85 },
+    { name: "React/next", percentage: 95 },
+    { name: " MYSQL", percentage: 75 },
+    { name: "JavaScript", percentage: 90 },
     { name: "HTML / CSS", percentage: 90 }
   ];
 
@@ -213,16 +213,16 @@ const Resume = () => {
           <div className="rotate-90 tracking-widest text-sm border-t border-gray-500 pt-2">
             Follow Me
           </div>
-          <a href="https://facebook.com" target="_blank" rel="noreferrer">
+          <a href="https://www.facebook.com/share/178u1z4QBv/" target="_blank" rel="noreferrer">
             <FaFacebook className="text-2xl hover:text-white transition" />
           </a>
           <a href="https://instagram.com" target="_blank" rel="noreferrer">
             <FaInstagram className="text-2xl hover:text-white transition" />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+          <a href="https://www.linkedin.com/in/aatish-aj-0a452a358/" target="_blank" rel="noreferrer">
             <FaLinkedin className="text-2xl hover:text-white transition" />
           </a>
-          <a href="https://github.com" target="_blank" rel="noreferrer">
+          <a href="https://github.com/Turag10" target="_blank" rel="noreferrer">
             <FaGithub className="text-2xl hover:text-white transition" />
           </a>
         </div>
@@ -246,7 +246,7 @@ const Resume = () => {
             {/* Profile Image */}
             <div className="flex justify-center">
               <img
-                src="/src/assets/cv pic.png" // replace with your profile image
+                src="/src/assets/my-resume-pic.png" 
                 alt="Profile"
                 className="w-48 h-48 object-cover rounded-md"
               />

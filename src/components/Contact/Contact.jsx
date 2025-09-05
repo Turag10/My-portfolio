@@ -1,4 +1,4 @@
-// src/components/Contact/Contact.jsx
+
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaUserTie } from "react-icons/fa";
