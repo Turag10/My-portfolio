@@ -61,7 +61,7 @@ export const ProjectData = [
     githubLink: "https://github.com/Turag10/My-third-assaignment",
     liveLink: "https://github.com/Turag10/My-second-assainment",
     technologies: {
-      frontend: ["React", "Tailwind CSS", "Framer Motion"],
+      frontend: ["HTML", "Tailwind CSS"],
       backend: []
     }
   },

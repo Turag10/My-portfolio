@@ -3,6 +3,7 @@ import { ProjectData } from "../../data/ProjectData";
 import engineImg from "../../assets/train engine.jpg";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { FaGithub } from "react-icons/fa";
 
 // Import train sound files
 import trainWhistle from "../../assets/sounds/train-whistle.mp3";
@@ -153,12 +154,9 @@ const Projects = () => {
     }
   };
 
-  // Add 3 more projects to the existing ones
+  // Use only the original 6 projects from ProjectData
   const allProjects = [
-    ...ProjectData,
-    { id: 5, name: "Weather App", description: "Real-time weather data", link: "#" },
-    { id: 6, name: "Task Manager", description: "Productivity application", link: "#" },
-    { id: 7, name: "Social Media Dashboard", description: "Analytics dashboard", link: "#" }
+    ...ProjectData.slice(0, 6), // Keep all 6 original projects
   ];
 
   return (
@@ -312,7 +310,7 @@ const Projects = () => {
             </div>
           </motion.div>
 
-          {/* Compartments */}
+          {/* Compartments - Original 6 projects */}
           {allProjects.map((p) => (
             <motion.div
               key={p.id}
@@ -339,6 +337,36 @@ const Projects = () => {
               </Link>
             </motion.div>
           ))}
+
+          {/* 7th compartment - GitHub Link */}
+          <motion.div
+            className="flex items-start train-part"
+            whileHover={{ scale: isMobile ? 1 : 1.05 }}
+          >
+            <div className="w-2 h-1 sm:w-3 sm:h-2 md:w-4 md:h-2 lg:w-6 lg:h-2 bg-gray-600 mx-1 sm:mx-2 rounded mt-4 sm:mt-5 md:mt-6 lg:mt-8"></div>
+
+            <a
+              href="https://github.com/Turag10"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center hover:scale-105 transition-transform duration-300"
+              onClick={handleProjectClick}
+            >
+              <div className="min-w-[120px] sm:min-w-[150px] md:min-w-[180px] lg:min-w-[250px] bg-gray-800 text-white rounded-xl shadow-lg p-3 sm:p-4 md:p-6 text-center cursor-pointer filter drop-shadow-lg">
+                <div className="flex flex-col items-center">
+                  <FaGithub className="text-3xl sm:text-4xl mb-2 text-green-400" />
+                  <h3 className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold">My GitHub</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm md:text-base mt-1">
+                    Explore all my projects
+                  </p>
+                </div>
+              </div>
+              <div className="flex space-x-2 sm:space-x-3 md:space-x-4 lg:space-x-6 mt-2">
+                <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-200 rounded-full wheel"></div>
+                <div className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 bg-gray-200 rounded-full wheel"></div>
+              </div>
+            </a>
+          </motion.div>
         </motion.div>
       </div>
 
@@ -355,14 +383,14 @@ const Projects = () => {
               <>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" clipRule="evenodd" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 14l2-2m0 极l2-2m-2 2l-2-2m2 2l2 2" />
                 </svg>
                 Unmute
               </>
             ) : (
               <>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M12 6a9 9 0 010 12m-4.5-9.5L12 3v18l-4.5-4.5H4a1 1 0 01-1-1v-7a1 1 0 011-1h3.5z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="极 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M12 6a9 9 0 010 12m-4.5-9.5L12 3v18l-极.5-4.5H4a1 1 0 01-1-1v-7a1 1 0 011-1h3.5z" />
                 </svg>
                 Mute
               </>
