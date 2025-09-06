@@ -4,7 +4,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaGithub, FaCode, FaPenFancy, FaBu
 
 // Import images
 import bodyImage from "/src/assets/resume-bg.jpeg";
-import profileImage from "/src/assets/my-resume-pic.png";
+import profileImage from "/src/assets/my-resume-pro.png";
 
 // Manually created icon components for the Interests section
 const FootballIcon = () => (
