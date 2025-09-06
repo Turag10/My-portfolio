@@ -168,7 +168,7 @@ const Resume = () => {
       <section
         className="relative min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center"
         style={{
-          backgroundImage: "url('/src/assets/resume-bg.jpeg')",
+          backgroundImage: "url('/src/assets/bodey.jpeg')",
         }}
       >
         {/* Overlay */}
