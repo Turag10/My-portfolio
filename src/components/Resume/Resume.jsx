@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import { useRef } from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaGithub, FaCode, FaPenFancy, FaBullhorn, FaGamepad, FaCheck } from "react-icons/fa";
 
+// Import images
+import bodyImage from "/src/assets/resume-bg.jpeg";
+import profileImage from "/src/assets/my-resume-pic.png";
+
 // Manually created icon components for the Interests section
 const FootballIcon = () => (
   <svg
@@ -168,7 +172,7 @@ const Resume = () => {
       <section
         className="relative min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center"
         style={{
-          backgroundImage: "url('/src/assets/bodey.jpeg')",
+          backgroundImage: `url(${bodyImage})`,
         }}
       >
         {/* Overlay */}
@@ -246,7 +250,7 @@ const Resume = () => {
             {/* Profile Image */}
             <div className="flex justify-center">
               <img
-                src="/src/assets/my-resume-pic.png" 
+                src={profileImage}
                 alt="Profile"
                 className="w-48 h-48 object-cover rounded-md"
               />

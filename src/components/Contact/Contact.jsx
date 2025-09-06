@@ -1,8 +1,10 @@
-
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaUserTie } from "react-icons/fa";
 import { FaFacebook, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
+
+// Import the image
+import junglePic from "/src/assets/contact-bg.jpeg";
 
 const Contact = () => {
   const detailsRef = useRef(null);
@@ -17,8 +19,7 @@ const Contact = () => {
       <section
         className="relative min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center"
         style={{
-          backgroundImage:
-            "url('/src/assets/jungle picc.jpg')", // <-- replace with your asset
+          backgroundImage: `url(${junglePic})`,
         }}
       >
         {/* Overlay */}
